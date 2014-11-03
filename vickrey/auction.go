@@ -1,9 +1,5 @@
 package auction
 
-type Bidder interface {
-	Bid(int) *Bid
-}
-
 type Auction struct {
 	Items    int    `json:"items"`
 	MaxPrice int    `json:"max_price"`
@@ -20,6 +16,13 @@ func New(items, price int) *Auction {
 		Items:    items,
 		MaxPrice: price,
 		Bids:     make([]*Bid, 0),
+	}
+}
+
+func (a *Auction) Generate(b []Bidder) {
+	a.Bids = make([]*Bid, len(b))
+	for i, bidder := range b {
+		a.Bids[i] = bidder.Bid(a.MaxPrice)
 	}
 }
 

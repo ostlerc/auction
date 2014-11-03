@@ -1,5 +1,14 @@
 package auction
 
+import (
+	"math/rand"
+	"time"
+)
+
+var (
+	R = rand.New(rand.NewSource(time.Now().UnixNano()))
+)
+
 func ArEq(a, b []int) bool {
 	if len(a) != len(b) {
 		return false

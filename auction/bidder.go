@@ -25,6 +25,7 @@ type RangeBidder struct {
 type CustomBidder struct {
 	money int
 	max   int
+	i     int
 }
 
 func SlowBidder(n int) Bidder {
@@ -51,10 +52,11 @@ func RandomBidder(n int) Bidder {
 	}
 }
 
-func TrueBidder(money, max int) Bidder {
+func TrueBidder(money, i, price int) Bidder {
 	return &CustomBidder{
 		money: money,
-		max:   max,
+		i:     i,
+		max:   R.Intn(price) + 1,
 	}
 }
 
@@ -71,21 +73,21 @@ func (r *RangeBidder) Bid(n int) *Bid {
 		res[i] = high
 	}
 	return &Bid{
-		BidType: r.t,
-		Bids:    res,
+		Type: r.t,
+		Bids: res,
 	}
 }
 
 func (t *CustomBidder) Bid(n int) *Bid {
 	res := make([]int, n)
 	for i := 0; i < n; i++ {
-		res[i] = t.money / (i + 1)
-		if res[i] > t.max {
-			res[i] = t.max
+		res[i] = t.money / (t.max * (i + 1))
+		if res[i] > t.i {
+			res[i] = t.i
 		}
 	}
 	return &Bid{
-		BidType: truestr,
-		Bids:    res,
+		Type: truestr,
+		Bids: res,
 	}
 }

@@ -4,7 +4,7 @@ import "testing"
 
 func TestClearingPrice(t *testing.T) {
 	a := New(30, 5)
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{6, 5, 4, 3, 2}},
 		&Bid{Bids: []int{6, 5, 4, 3, 2}},
 		&Bid{Bids: []int{6, 5, 4, 3, 2}},
@@ -18,7 +18,7 @@ func TestClearingPrice(t *testing.T) {
 		t.Fatal(p)
 	}
 
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{4, 3, 2, 1, 0}},
 		&Bid{Bids: []int{4, 3, 2, 1, 0}},
 		&Bid{Bids: []int{4, 3, 2, 1, 0}},
@@ -32,7 +32,7 @@ func TestClearingPrice(t *testing.T) {
 		t.Fatal(p)
 	}
 
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{7, 7, 7, 7, 7}},
 		&Bid{Bids: []int{7, 7, 7, 7, 7}},
 		&Bid{Bids: []int{7, 7, 7, 7, 7}},
@@ -49,13 +49,13 @@ func TestClearingPrice(t *testing.T) {
 
 func TestBidderPrice(t *testing.T) {
 	a := New(10, 5)
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{10, 10, 4, 3, 2}},
 		&Bid{Bids: []int{7, 4, 4, 3, 2}},
 		&Bid{Bids: []int{4, 2, 1, 1, 1}},
 	}
 
-	if p := a.BidderPrice(0); p != 4 {
+	if p := a.BidderPrice(0); p != 2 {
 		t.Fatal(p)
 	}
 	if p := a.BidderPrice(1); p != 3 {
@@ -65,14 +65,14 @@ func TestBidderPrice(t *testing.T) {
 		t.Fatal(p)
 	}
 
-	if p := a.BidderPrices(); !ArEq(p, []int{4, 3, 3}) {
+	if p := a.BidderPrices(); !ArEq(p, []int{2, 3, 3}) {
 		t.Fatal(p)
 	}
 }
 
 func TestRow(t *testing.T) {
 	a := New(30, 5)
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{1, 2, 3, 4, 5}},
 		&Bid{Bids: []int{5, 4, 3, 2, 1}},
 	}
@@ -100,7 +100,7 @@ func TestRow(t *testing.T) {
 
 func TestDistribute(t *testing.T) {
 	a := New(5, 5)
-	a.Bids = []*Bid{
+	a.Bids = Bids{
 		&Bid{Bids: []int{1, 2, 3, 4, 5}},
 		&Bid{Bids: []int{5, 4, 3, 2, 1}},
 	}

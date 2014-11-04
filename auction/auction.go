@@ -52,11 +52,7 @@ func (a *Auction) Conduct(b []Bidder) {
 // demand for the object to sell all objects
 func (a *Auction) ClearingPrice() int {
 	for i := 0; i < a.MaxPrice; i++ {
-		sum := 0
-		for _, bids := range a.Bids {
-			sum += bids.Bids[i]
-		}
-		if sum < a.Items {
+		if a.Row(i).Sum() < a.Items {
 			return i
 		}
 	}
@@ -66,10 +62,8 @@ func (a *Auction) ClearingPrice() int {
 // BidderPrice returns the price for bidder n
 func (a *Auction) BidderPrice(n int) int {
 	for i := 0; i < a.MaxPrice; i++ {
-		row := a.Row(i)
-		sum := row.Sum()
-		sum -= row[n]
-		if sum < a.Items {
+		sum := a.Row(i).Sum()
+		if sum-a.Bids[n].Bids[i] < a.Items {
 			return i + 1
 		}
 	}
@@ -88,7 +82,7 @@ func (a *Auction) BidderPrices() Ints {
 // Result returns a result struct of the auction
 func (a *Auction) Result() *Result {
 	return &Result{
-		Distribution: a.Distribute(a.ClearingPrice()),
+		Distribution: a.Distribute(a.ClearingPrice() - 1),
 		Prices:       a.BidderPrices(),
 		Utility:      a.Utility(),
 	}

@@ -17,43 +17,56 @@ type Bidder interface {
 }
 
 type RangeBidder struct {
-	low, high int
-	t         int
+	m int
+	t string
+	i int
 }
 
-type TrueBidder struct {
+type CustomBidder struct {
 	money int
 	max   int
 }
 
 func SlowBidder(n int) Bidder {
 	return &RangeBidder{
-		low:  0,
-		high: n / 4,
-		t:    Slow,
+		m: n / 5,
+		t: slowstr,
+		i: n,
 	}
 }
 
 func FastBidder(n int) Bidder {
 	return &RangeBidder{
-		low:  n / 4,
-		high: n / 2,
-		t:    Fast,
+		m: n / 3,
+		t: faststr,
+		i: n,
 	}
 }
 
 func RandomBidder(n int) Bidder {
 	return &RangeBidder{
-		low:  0,
-		high: n,
-		t:    Random,
+		m: R.Intn(n / 2),
+		t: randomstr,
+		i: n,
+	}
+}
+
+func TrueBidder(money, max int) Bidder {
+	return &CustomBidder{
+		money: money,
+		max:   max,
 	}
 }
 
 func (r *RangeBidder) Bid(n int) *Bid {
 	res := make([]int, n)
+	high := r.i
 	for i := 0; i < n; i++ {
-		res[i] = R.Intn(r.high-r.low) + R.Intn(r.low)
+		high -= R.Intn(r.m)
+		if high < 0 {
+			high = 0
+		}
+		res[i] = high
 	}
 	return &Bid{
 		BidType: r.t,
@@ -61,7 +74,7 @@ func (r *RangeBidder) Bid(n int) *Bid {
 	}
 }
 
-func (t *TrueBidder) Bid(n int) *Bid {
+func (t *CustomBidder) Bid(n int) *Bid {
 	res := make([]int, n)
 	for i := 0; i < n; i++ {
 		res[i] = t.money / (i + 1)
@@ -70,22 +83,7 @@ func (t *TrueBidder) Bid(n int) *Bid {
 		}
 	}
 	return &Bid{
-		BidType: True,
+		BidType: truestr,
 		Bids:    res,
-	}
-}
-
-func TypeString(t int) string {
-	switch t {
-	case Slow:
-		return slowstr
-	case Fast:
-		return faststr
-	case Random:
-		return randomstr
-	case True:
-		return truestr
-	default:
-		panic("Invalid type")
 	}
 }

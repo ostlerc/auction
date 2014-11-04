@@ -7,8 +7,8 @@ type Auction struct {
 }
 
 type Bid struct {
-	BidType int   `json:"type"`
-	Bids    []int `json:"bids"`
+	BidType string `json:"type"`
+	Bids    []int  `json:"bids"`
 }
 
 func New(items, price int) *Auction {

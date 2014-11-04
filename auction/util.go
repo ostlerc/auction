@@ -39,3 +39,30 @@ func (i Ints) Sum() int {
 	}
 	return sum
 }
+
+//Average all except at index n. Regular average if n == -1
+func (i Ints) Ave(n int) float64 {
+	sum := i.Sum()
+	if n != -1 {
+		sum -= i[n]
+		return float64(sum) / float64(len(i)-1)
+	}
+	return float64(sum) / float64(len(i))
+}
+
+func (i Ints) Add(r Ints) {
+	if len(i) != len(r) {
+		panic("incorrect adding")
+	}
+	for x := 0; x < len(i); x++ {
+		i[x] += r[x]
+	}
+}
+
+func (i Ints) Div(n int) []float64 {
+	res := make([]float64, len(i))
+	for x := 0; x < len(i); x++ {
+		res[x] = float64(i[x]) / float64(n)
+	}
+	return res
+}

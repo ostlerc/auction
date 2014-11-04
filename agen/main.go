@@ -17,7 +17,7 @@ var (
 	fast   = flag.Int("f", 0, "Number of fast bidders in the auction.")
 	slow   = flag.Int("s", 0, "Number of slow bidders in the auction.")
 	tru    = flag.Int("t", 0, "Number of tru bidders in the auction.")
-	tmm    = flag.Int("tm", *price*10, "Maximum amount of money a true bidder auctions.")
+	tmm    = flag.Int("tm", *price*10, "Maximum amount of money a true bidder can auction.")
 
 	o = flag.String("o", "csv", "Output type [json,csv]")
 )

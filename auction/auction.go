@@ -81,11 +81,18 @@ func (a *Auction) BidderPrices() Ints {
 
 // Result returns a result struct of the auction
 func (a *Auction) Result() *Result {
-	return &Result{
+	res := &Result{
 		Distribution: a.Distribute(a.ClearingPrice() - 1),
 		Prices:       a.BidderPrices(),
 		Utility:      a.Utility(),
 	}
+	for i, v := range res.Distribution {
+		if v == 0 {
+			res.Prices[i] = 0
+			res.Utility[i] = 0
+		}
+	}
+	return res
 }
 
 //Row returns the winning row results by bids index
@@ -132,7 +139,11 @@ func (a *Auction) Utility() Ints {
 	res := make(Ints, len(a.Bids))
 	cp := a.ClearingPrice() + 1
 	for i, v := range a.BidderPrices() {
-		res[i] = cp - v
+		if v == 0 { //they didn't win
+			res[i] = 0
+		} else {
+			res[i] = cp - v
+		}
 	}
 	return res
 }

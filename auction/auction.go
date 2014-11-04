@@ -1,21 +1,25 @@
 package auction
 
+// Auction contains all information for an auction
 type Auction struct {
 	Items    int    `json:"items"`
 	MaxPrice int    `json:"max_price"`
 	Bids     []*Bid `json:"bids"`
 }
 
-type Result struct {
-	Distribution []int `json:"distribution"`
-	Prices       []int `json:"prices"`
-}
-
+// Bid contains descending order of bids for one bidder
 type Bid struct {
 	BidType string `json:"type"`
 	Bids    []int  `json:"bids"`
 }
 
+// Result contains all auction result information
+type Result struct {
+	Distribution []int `json:"distribution"`
+	Prices       []int `json:"prices"`
+}
+
+// New creates a new auction with given item and price
 func New(items, price int) *Auction {
 	return &Auction{
 		Items:    items,
@@ -24,6 +28,7 @@ func New(items, price int) *Auction {
 	}
 }
 
+// Generate sets bidders for an auction
 func (a *Auction) Generate(b []Bidder) {
 	a.Bids = make([]*Bid, len(b))
 	for i, bidder := range b {
@@ -31,6 +36,8 @@ func (a *Auction) Generate(b []Bidder) {
 	}
 }
 
+// ClearingPrice returns the price where there is no longer enough
+// demand for the object to sell all objects
 func (a *Auction) ClearingPrice() int {
 	for i := 0; i < a.MaxPrice; i++ {
 		sum := 0
@@ -44,6 +51,7 @@ func (a *Auction) ClearingPrice() int {
 	return a.MaxPrice - 1
 }
 
+// BidderPrice returns the price for bidder n
 func (a *Auction) BidderPrice(n int) int {
 	for i := 0; i < a.MaxPrice; i++ {
 		sum := 0
@@ -60,6 +68,7 @@ func (a *Auction) BidderPrice(n int) int {
 	return a.MaxPrice - 1
 }
 
+// BidderPrices returns an array of prices each bidder needs to pay
 func (a *Auction) BidderPrices() []int {
 	res := make([]int, len(a.Bids))
 	for i := 0; i < len(a.Bids); i++ {
@@ -68,6 +77,7 @@ func (a *Auction) BidderPrices() []int {
 	return res
 }
 
+// Result returns a result struct of the auction
 func (a *Auction) Result() *Result {
 	return &Result{
 		Distribution: a.Distribute(a.ClearingPrice() - 1),
@@ -85,6 +95,7 @@ func (a *Auction) Row(n int) []int {
 	return res
 }
 
+// Distribute returns an array of how items are distributed in the auction
 func (a *Auction) Distribute(r int) []int {
 	if r == -1 {
 		r = 0

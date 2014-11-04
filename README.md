@@ -16,7 +16,8 @@ agen
     -t=0: Number of tru bidders in the auction.
     -tm=100: Maximum amount of money a true bidder can auction.
 
-    sample csv output:
+  sample csv output:
+
      Items        30
      Clear Price  10
      Price        r1  r2  r3
@@ -39,21 +40,23 @@ agen
 
 recap
 =====
- simulate and recap several auctions
+  simulate and recap several auctions
 
-   Usage of recap:
-   -b="5,13,21": csv of bidder rows to output
-   -items=30: Number of items in auction
-   -n=5: Auctions to aggregate
-   -price=10: Maximum price of auction
-   -tm=100: Maximum amount of money a true bidder can auction.
+    Usage of recap:
+    -b="5,13,21": csv of bidder rows to output
+    -items=30: Number of items in auction
+    -n=5: Auctions to aggregate
+    -price=10: Maximum price of auction
+    -tm=100: Maximum amount of money a true bidder can auction.
 
- sample csv output:
+  sample csv output:
 
-    Bidders  rand(Ct $ Util)           fast(Ct $ Util)           slow(Ct $ Util)           all(rand/fast/slow/orig)
-    5        0.6 1.4 0.4(4.9 2.1 0.4)  2.0 1.0 0.2(4.7 2.4 0.4)  2.2 1.8 0.2(4.6 4.7 0.3)  1.2 2.8 0.2(6.0 1.6 0.4 / 6.0 4.0 0.0 / 5.4 3.2 1.0 / 5.4 2.8 0.4)
-    13       0.0 0.0 0.0(1.9 0.6 0.0)  1.0 1.4 0.0(1.9 1.2 0.0)  0.0 0.0 0.0(1.9 1.7 0.0)  0.0 0.0 0.0(2.3 1.5 0.1 / 2.3 1.5 0.0 / 2.3 2.7 0.1 / 2.3 0.8 0.0)
-    21       0.0 0.0 0.0(1.2 0.4 0.0)  0.6 3.2 0.0(1.2 1.2 0.1)  0.0 0.0 0.0(1.2 0.9 0.0)  0.0 0.0 0.0(1.4 1.0 0.0 / 1.4 1.0 0.0 / 1.4 0.5 0.0 / 1.4 1.0 0.0)
+     Bidders  rand(Ct $ Util)           fast(Ct $ Util)           slow(Ct $ Util)           all(rand/fast/slow/orig)
+     5        0.6 1.4 0.4(4.9 2.1 0.4)  2.0 1.0 0.2(4.7 2.4 0.4)  2.2 1.8 0.2(4.6 4.7 0.3)  1.2 2.8 0.2(6.0 1.6 0.4 / 6.0 4.0 0.0 / 5.4 3.2 1.0 / 5.4 2.8 0.4)
+     13       0.0 0.0 0.0(1.9 0.6 0.0)  1.0 1.4 0.0(1.9 1.2 0.0)  0.0 0.0 0.0(1.9 1.7 0.0)  0.0 0.0 0.0(2.3 1.5 0.1 / 2.3 1.5 0.0 / 2.3 2.7 0.1 / 2.3 0.8 0.0)
+     21       0.0 0.0 0.0(1.2 0.4 0.0)  0.6 3.2 0.0(1.2 1.2 0.1)  0.0 0.0 0.0(1.2 0.9 0.0)  0.0 0.0 0.0(1.4 1.0 0.0 / 1.4 1.0 0.0 / 1.4 0.5 0.0 / 1.4 1.0 0.0)
+
+ Note: this csv output has been pretty printed in column format
 
 report
 ======

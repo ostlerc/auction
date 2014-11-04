@@ -55,13 +55,17 @@ func TestBidderPrice(t *testing.T) {
 		&Bid{Bids: []int{4, 2, 1, 1, 1}},
 	}
 
-	if p := a.BidderPrice(0); p != 1 {
+	if p := a.BidderPrice(0); p != 4 {
 		t.Fatal(p)
 	}
-	if p := a.BidderPrice(1); p != 2 {
+	if p := a.BidderPrice(1); p != 3 {
 		t.Fatal(p)
 	}
-	if p := a.BidderPrice(2); p != 2 {
+	if p := a.BidderPrice(2); p != 3 {
+		t.Fatal(p)
+	}
+
+	if p := a.BidderPrices(); !ArEq(p, []int{4, 3, 3}) {
 		t.Fatal(p)
 	}
 }

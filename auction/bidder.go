@@ -62,7 +62,9 @@ func (r *RangeBidder) Bid(n int) *Bid {
 	res := make([]int, n)
 	high := r.i
 	for i := 0; i < n; i++ {
-		high -= R.Intn(r.m)
+		if r.m > 0 {
+			high -= R.Intn(r.m)
+		}
 		if high < 0 {
 			high = 0
 		}

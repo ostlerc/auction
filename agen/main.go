@@ -13,10 +13,10 @@ var (
 	items = flag.Int("items", 30, "Number of items in auction")
 	price = flag.Int("price", 10, "Maximum price of auction")
 
-	random = flag.Int("random", 1, "Number of random bidders in the auction.")
-	fast   = flag.Int("fast", 1, "Number of fast bidders in the auction.")
-	slow   = flag.Int("slow", 1, "Number of slow bidders in the auction.")
-	tru    = flag.Int("tru", 1, "Number of tru bidders in the auction.")
+	random = flag.Int("random", 3, "Number of random bidders in the auction.")
+	fast   = flag.Int("fast", 0, "Number of fast bidders in the auction.")
+	slow   = flag.Int("slow", 0, "Number of slow bidders in the auction.")
+	tru    = flag.Int("tru", 0, "Number of tru bidders in the auction.")
 	tmm    = flag.Int("tru_max_money", *price*10, "Maximum amount of money a true bidder auctions.")
 )
 
@@ -41,9 +41,17 @@ func main() {
 	flag.Parse()
 	a := auction.New(*items, *price)
 	a.Generate(bidders())
+	res := a.Result()
 	dat, err := json.Marshal(a)
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(string(dat))
+
+	dat, err = json.Marshal(res)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Println(string(dat))
 }

@@ -6,6 +6,11 @@ type Auction struct {
 	Bids     []*Bid `json:"bids"`
 }
 
+type Result struct {
+	Distribution []int `json:"distribution"`
+	Prices       []int `json:"prices"`
+}
+
 type Bid struct {
 	BidType string `json:"type"`
 	Bids    []int  `json:"bids"`
@@ -49,10 +54,25 @@ func (a *Auction) BidderPrice(n int) int {
 			sum += a.Bids[j].Bids[i]
 		}
 		if sum < a.Items {
-			return i
+			return a.MaxPrice - i
 		}
 	}
 	return a.MaxPrice - 1
+}
+
+func (a *Auction) BidderPrices() []int {
+	res := make([]int, len(a.Bids))
+	for i := 0; i < len(a.Bids); i++ {
+		res[i] = a.BidderPrice(i)
+	}
+	return res
+}
+
+func (a *Auction) Result() *Result {
+	return &Result{
+		Distribution: a.Distribute(a.ClearingPrice() - 1),
+		Prices:       a.BidderPrices(),
+	}
 }
 
 //Row returns the winning row results by bids index
@@ -66,6 +86,9 @@ func (a *Auction) Row(n int) []int {
 }
 
 func (a *Auction) Distribute(r int) []int {
+	if r == -1 {
+		r = 0
+	}
 	items := a.Items
 	row := a.Row(r)
 	l := len(row)

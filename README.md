@@ -1,10 +1,10 @@
+[![Build Status](https://travis-ci.org/ostlerc/auction.svg?branch=master)](https://travis-ci.org/ostlerc/auction)
 auction
 =======
 multi-unit vickrey auction analysis software
 
 agen
 ====
-[![Build Status](https://travis-ci.org/ostlerc/auction.svg?branch=master)](https://travis-ci.org/ostlerc/auction)
 
   View single auction results.
 
